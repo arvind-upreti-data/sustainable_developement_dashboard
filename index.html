@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG India 2030 Dashboard | Sustainable Development Goals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .main-title {
+            color: #ffffff;
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            flex-grow: 1;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .niti-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .niti-text {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #0098db 0%, #0077b6 100%);
+            padding: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 18px 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .nav-item:first-child .nav-link {
+            font-size: 1.3rem;
+            padding: 16px 25px;
+        }
+
+        .dropdown-arrow {
+            font-size: 0.6rem;
+            margin-left: 2px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .search-icon {
+            padding: 18px 30px;
+            cursor: pointer;
+        }
+
+        /* Mega Dropdown Menu */
+        .mega-dropdown {
+            position: fixed;
+            top: auto;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            border-top: 3px solid #0098db;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .nav-item:hover .mega-dropdown {
+            display: block;
+        }
+
+        .mega-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            gap: 30px;
+        }
+
+        .overview-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .overview-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #0098db;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .overview-text {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Fixed to 3 columns */
+            gap: 25px;
+        }
+
+        .dropdown-category {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.05rem;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #0098db;
+        }
+
+        .category-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .dropdown-item {
+            color: #555;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 6px 0;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .dropdown-item:hover {
+            color: #0098db;
+            padding-left: 8px;
+        }
+
+        .sub-items {
+            padding-left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sub-items .dropdown-item {
+            font-size: 0.88rem;
+            color: #666;
+        }
+
+        /* Dashboard Content */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-title {
+            color: #0077b6;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* What's New Marquee Section */
+        .whats-new-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .whats-new-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0098db;
+        }
+
+        .whats-new-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .whats-new-icon {
+            color: #0098db;
+            font-size: 1.2rem;
+        }
+
+        .view-all-btn {
+            background: #0098db;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background: #0077b6;
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: marquee 25s linear infinite;
+            gap: 40px;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .marquee-icon {
+            color: #0098db;
+            font-size: 1rem;
+        }
+
+        .marquee-text {
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Pause on hover */
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        /* Modal for View All Updates */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 900px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #0098db;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .close-btn {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .updates-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .update-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #0098db;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+
+        .update-item:hover {
+            transform: translateX(5px);
+            background: #e9ecef;
+        }
+
+        .update-icon-text {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .update-icon-text i {
+            color: #0098db;
+            font-size: 1.3rem;
+        }
+
+        /* KPI Cards Section */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .kpi-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #0077b6;
+            margin-bottom: 10px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #2E7D32;
+            margin: 15px 0;
+        }
+
+        .kpi-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .kpi-status {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .kpi-status.status-2 {
+            background: #FF9800;
+        }
+
+        .kpi-status.status-3 {
+            background: #4CAF50;
+        }
+
+        /* NEW: Interactive Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        /* SDG Detailed Charts Grid */
+        .sdg-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sdg-chart-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .sdg-chart-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-action-btn {
+            background: #f0f8ff;
+            border: 1px solid #0098db;
+            color: #0098db;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chart-action-btn:hover {
+            background: #0098db;
+            color: white;
+        }
+
+        .chart-canvas-container {
+            flex: 1; /* Take remaining space */
+            position: relative;
+            min-height: 0; /* Allow shrinking */
+        }
+
+        .chart-canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* NEW: Data Table Section */
+        .data-table-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f0f8ff;
+            color: #0077b6;
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 2px solid #0098db;
+        }
+
+        .data-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table tr:hover {
+            background: #f5f9ff;
+        }
+
+        /* NEW: State Comparison Section */
+        .state-comparison {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .state-selectors {
+            display: flex;
+            gap: 15px;
+        }
+
+        .state-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .comparison-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .comparison-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0098db;
+            margin: 10px 0;
+        }
+
+        .comparison-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* NEW: Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            color: #0098db;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #0098db;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #555;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .nav-link {
+                padding: 16px 18px;
+                font-size: 0.95rem;
+            }
+
+            .dropdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .kpi-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .main-title {
+                font-size: 1.5rem;
+            }
+
+            .navbar {
+                overflow-x: auto;
+            }
+
+            .nav-menu {
+                flex-wrap: nowrap;
+                min-width: max-content;
+            }
+
+            .nav-link {
+                padding: 14px 15px;
+                font-size: 0.9rem;
+            }
+
+            .mega-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dropdown-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .whats-new-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .marquee-item {
+                padding: 6px 12px;
+            }
+
+            .marquee-text {
+                font-size: 0.9rem;
+            }
+
+            .kpi-section {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-value {
+                font-size: 1.8rem;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .state-selectors {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 350px; /* Slightly smaller on mobile */
+            }
+
+            .sdg-charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header-container">
+        <div class="logo-section">
+            <div class="niti-logo">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#fbbf24" stroke-width="3"/>
+                    <path d="M30 40 L50 25 L70 40 L70 75 L30 75 Z" fill="#3b82f6" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="20" fill="#1e40af"/>
+                    <text x="50" y="58" font-size="16" fill="#fff" text-anchor="middle" font-weight="bold">NITI</text>
+                </svg>
+                <span class="niti-text">NITI Aayog</span>
+            </div>
+        </div>
+
+        <h1 class="main-title">SDG INDIA 2030 DASHBOARD</h1>
+
+        <div class="logo-section">
+            <div class="niti-logo">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="#ffffff"/>
+                    <text x="50" y="35" font-size="14" fill="#1e40af" text-anchor="middle" font-weight="bold">Sustainable</text>
+                    <text x="50" y="50" font-size="14" fill="#1e40af" text-anchor="middle" font-weight="bold">Development</text>
+                    <text x="50" y="65" font-size="14" fill="#1e40af" text-anchor="middle" font-weight="bold">Goals</text>
+                    <text x="50" y="85" font-size="20" fill="#3b82f6" text-anchor="middle" font-weight="bold">2030</text>
+                </svg>
+                <span class="niti-text">India 2030</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    No Poverty <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- No Poverty Mega Dropdown -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                No Poverty Overview <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <p class="overview-text">
+                                Eradicating poverty in all its forms remains one of the greatest challenges facing humanity. This section tracks India's progress in poverty alleviation.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-chart-line" style="color: #e74c3c;"></i>
+                                    <span>Poverty Metrics</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Poverty Headcount Ratio</a>
+                                <a href="#" class="dropdown-item">Multidimensional Poverty Index</a>
+                                <a href="#" class="dropdown-item">Rural vs Urban Poverty</a>
+                                <a href="#" class="dropdown-item">State-wise Poverty Rates</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-hands-helping" style="color: #3498db;"></i>
+                                    <span>Social Programs</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Direct Benefit Transfer</a>
+                                <a href="#" class="dropdown-item">Employment Guarantee</a>
+                                <a href="#" class="dropdown-item">Food Security Programs</a>
+                                <a href="#" class="dropdown-item">Housing for All</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-landmark" style="color: #2ecc71;"></i>
+                                    <span>Policy & Impact</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Financial Inclusion</a>
+                                <a href="#" class="dropdown-item">Rural Development</a>
+                                <a href="#" class="dropdown-item">Social Protection</a>
+                                <a href="#" class="dropdown-item">Sustainable Livelihoods</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Zero Hunger <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Zero Hunger Mega Dropdown -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Zero Hunger Overview <i class="fas fa-utensils"></i>
+                            </div>
+                            <p class="overview-text">
+                                Achieving food security and improved nutrition while promoting sustainable agriculture is essential for India's development.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-wheat-alt" style="color: #f39c12;"></i>
+                                    <span>Food Production</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Crop Production</a>
+                                <a href="#" class="dropdown-item">Food Grain Stocks</a>
+                                <a href="#" class="dropdown-item">Agricultural Productivity</a>
+                                <a href="#" class="dropdown-item">Supply Chain Efficiency</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-apple-alt" style="color: #e74c3c;"></i>
+                                    <span>Nutrition</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Malnutrition Rates</a>
+                                <a href="#" class="dropdown-item">Child Nutrition</a>
+                                <a href="#" class="dropdown-item">Diet Diversity</a>
+                                <a href="#" class="dropdown-item">Nutrition Programs</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-tractor" style="color: #27ae60;"></i>
+                                    <span>Sustainable Agriculture</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Organic Farming</a>
+                                <a href="#" class="dropdown-item">Water Management</a>
+                                <a href="#" class="dropdown-item">Soil Health</a>
+                                <a href="#" class="dropdown-item">Climate Resilience</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Good Health <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Good Health Mega Dropdown -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Health & Well-being Overview <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <p class="overview-text">
+                                Ensuring healthy lives and promoting well-being for all at all ages is essential to sustainable development.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-hospital" style="color: #e74c3c;"></i>
+                                    <span>Healthcare Access</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Hospital Infrastructure</a>
+                                <a href="#" class="dropdown-item">Health Workforce</a>
+                                <a href="#" class="dropdown-item">Health Insurance Coverage</a>
+                                <a href="#" class="dropdown-item">Telemedicine Services</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-baby" style="color: #3498db;"></i>
+                                    <span>Maternal & Child Health</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Maternal Mortality</a>
+                                <a href="#" class="dropdown-item">Child Mortality</a>
+                                <a href="#" class="dropdown-item">Immunization Coverage</a>
+                                <a href="#" class="dropdown-item">Reproductive Health</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-virus" style="color: #2ecc71;"></i>
+                                    <span>Disease Control</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Communicable Diseases</a>
+                                <a href="#" class="dropdown-item">Non-Communicable Diseases</a>
+                                <a href="#" class="dropdown-item">Epidemic Preparedness</a>
+                                <a href="#" class="dropdown-item">Vaccination Programs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Quality Education <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Quality Education Mega Dropdown - FIXED -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Education Overview <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <p class="overview-text">
+                                Ensuring inclusive and equitable quality education and promoting lifelong learning opportunities for all.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-school" style="color: #9b59b6;"></i>
+                                    <span>Access & Infrastructure</span>
+                                </div>
+                                <a href="#" class="dropdown-item">School Infrastructure</a>
+                                <a href="#" class="dropdown-item">Digital Learning</a>
+                                <a href="#" class="dropdown-item">Rural Education</a>
+                                <a href="#" class="dropdown-item">Special Education</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-chalkboard-teacher" style="color: #f39c12;"></i>
+                                    <span>Quality & Outcomes</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Learning Outcomes</a>
+                                <a href="#" class="dropdown-item">Teacher Training</a>
+                                <a href="#" class="dropdown-item">Curriculum Development</a>
+                                <a href="#" class="dropdown-item">Vocational Training</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-user-graduate" style="color: #3498db;"></i>
+                                    <span>Higher Education</span>
+                                </div>
+                                <a href="#" class="dropdown-item">University Enrollment</a>
+                                <a href="#" class="dropdown-item">Research & Innovation</a>
+                                <a href="#" class="dropdown-item">Skill Development</a>
+                                <a href="#" class="dropdown-item">Employability</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Gender Equality <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Gender Equality Mega Dropdown - NEW -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Gender Equality Overview <i class="fas fa-venus-mars"></i>
+                            </div>
+                            <p class="overview-text">
+                                Achieving gender equality and empowering all women and girls is crucial for sustainable development and a just society.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-balance-scale" style="color: #e91e63;"></i>
+                                    <span>Legal & Political</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Women's Representation</a>
+                                <a href="#" class="dropdown-item">Gender Justice Laws</a>
+                                <a href="#" class="dropdown-item">Political Participation</a>
+                                <a href="#" class="dropdown-item">Legal Rights Protection</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-briefcase" style="color: #9c27b0;"></i>
+                                    <span>Economic Empowerment</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Workforce Participation</a>
+                                <a href="#" class="dropdown-item">Gender Pay Gap</a>
+                                <a href="#" class="dropdown-item">Entrepreneurship</a>
+                                <a href="#" class="dropdown-item">Financial Inclusion</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-heart" style="color: #f44336;"></i>
+                                    <span>Health & Safety</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Maternal Health</a>
+                                <a href="#" class="dropdown-item">Gender-based Violence</a>
+                                <a href="#" class="dropdown-item">Reproductive Rights</a>
+                                <a href="#" class="dropdown-item">Mental Health</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Clean Water <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Clean Water Mega Dropdown - NEW -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Clean Water & Sanitation Overview <i class="fas fa-tint"></i>
+                            </div>
+                            <p class="overview-text">
+                                Ensuring availability and sustainable management of water and sanitation for all is fundamental to human dignity and development.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-faucet" style="color: #3498db;"></i>
+                                    <span>Water Access</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Drinking Water Coverage</a>
+                                <a href="#" class="dropdown-item">Water Quality Monitoring</a>
+                                <a href="#" class="dropdown-item">Rural Water Supply</a>
+                                <a href="#" class="dropdown-item">Urban Water Systems</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-toilet" style="color: #795548;"></i>
+                                    <span>Sanitation</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Sanitation Coverage</a>
+                                <a href="#" class="dropdown-item">Open Defecation Free</a>
+                                <a href="#" class="dropdown-item">Waste Management</a>
+                                <a href="#" class="dropdown-item">Hygiene Promotion</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-recycle" style="color: #4caf50;"></i>
+                                    <span>Water Management</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Water Conservation</a>
+                                <a href="#" class="dropdown-item">Watershed Management</a>
+                                <a href="#" class="dropdown-item">Water Use Efficiency</a>
+                                <a href="#" class="dropdown-item">Groundwater Management</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Reduce Inequality <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+                <!-- Reduce Inequality Mega Dropdown - NEW -->
+                <div class="mega-dropdown">
+                    <div class="mega-content">
+                        <div class="overview-section">
+                            <div class="overview-title">
+                                Reduced Inequalities Overview <i class="fas fa-handshake"></i>
+                            </div>
+                            <p class="overview-text">
+                                Reducing inequality within and among countries is essential for sustainable development and social cohesion.
+                            </p>
+                        </div>
+                        <div class="dropdown-grid">
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-chart-pie" style="color: #ff5722;"></i>
+                                    <span>Economic Inequality</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Income Distribution</a>
+                                <a href="#" class="dropdown-item">Wealth Inequality</a>
+                                <a href="#" class="dropdown-item">Regional Disparities</a>
+                                <a href="#" class="dropdown-item">Social Mobility</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-users" style="color: #673ab7;"></i>
+                                    <span>Social Inclusion</span>
+                                </div>
+                                <a href="#" class="dropdown-item">Marginalized Communities</a>
+                                <a href="#" class="dropdown-item">Disability Inclusion</a>
+                                <a href="#" class="dropdown-item">Social Protection</a>
+                                <a href="#" class="dropdown-item">Equal Opportunity</a>
+                            </div>
+
+                            <div class="dropdown-category">
+                                <div class="category-header">
+                                    <i class="fas fa-globe" style="color: #2196f3;"></i>
+                                    <span>Global Partnerships</span>
+                                </div>
+                                <a href="#" class="dropdown-item">International Cooperation</a>
+                                <a href="#" class="dropdown-item">Migration Policies</a>
+                                <a href="#" class="dropdown-item">Development Assistance</a>
+                                <a href="#" class="dropdown-item">Global Governance</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    Climate Action <i class="fas fa-caret-down dropdown-arrow"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link search-icon">
+                    <i class="fas fa-search"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <h2 class="dashboard-title">India Sustainable Development Goals Dashboard</h2>
+        
+        <!-- What's New Marquee Section -->
+        <div class="whats-new-container">
+            <div class="whats-new-header">
+                <div class="whats-new-title">
+                    <i class="fas fa-bullhorn whats-new-icon"></i>
+                    What's New
+                </div>
+                <button class="view-all-btn">View All</button>
+            </div>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="marquee-item">
+                        <i class="fas fa-shield-alt marquee-icon"></i>
+                        <span class="marquee-text">SDG 1: Social protection coverage reaches 64.3% in 2025</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-users marquee-icon"></i>
+                        <span class="marquee-text">SDG 1: 53.2 Lakh Self-Help Groups provided bank credit linkage in 2023-24</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-apple-alt marquee-icon"></i>
+                        <span class="marquee-text">SDG 2: Zero Hunger initiative benefits 80 crore citizens through food security programs</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-heartbeat marquee-icon"></i>
+                        <span class="marquee-text">SDG 3: Maternal mortality ratio declines to 93 per 100,000 live births</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-child marquee-icon"></i>
+                        <span class="marquee-text">SDG 3: Under-5 mortality rate improves across rural and urban areas</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-graduation-cap marquee-icon"></i>
+                        <span class="marquee-text">SDG 4: Gross enrolment in higher secondary education reaches 56.2%</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-school marquee-icon"></i>
+                        <span class="marquee-text">SDG 4: Digital learning initiatives reach 15 crore students nationwide</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-female marquee-icon"></i>
+                        <span class="marquee-text">SDG 5: Women's participation in workforce shows steady growth</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-tint marquee-icon"></i>
+                        <span class="marquee-text">SDG 6: Jal Jeevan Mission provides tap water to 14.5 crore rural households</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-solar-panel marquee-icon"></i>
+                        <span class="marquee-text">SDG 7: Renewable energy capacity reaches 175 GW milestone</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-seedling marquee-icon"></i>
+                        <span class="marquee-text">SDG 2: Agricultural productivity per worker increases to Rs 94,110 in 2024-25</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-home marquee-icon"></i>
+                        <span class="marquee-text">SDG 1: 1.57 Lakh senior citizens assisted through institutional care in 2023-24</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-leaf marquee-icon"></i>
+                        <span class="marquee-text">SDG 13: India commits to net-zero carbon emissions by 2070</span>
+                    </div>
+                    <div class="marquee-item">
+                        <i class="fas fa-recycle marquee-icon"></i>
+                        <span class="marquee-text">SDG 12: Swachh Bharat Mission achieves 100% ODF status</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Cards Section -->
+        <div class="kpi-section">
+            <!-- Card 1: No Poverty - Social Protection -->
+            <div class="kpi-card">
+                <i class="fas fa-shield-alt kpi-icon" style="color: #e74c3c;"></i>
+                <div class="kpi-title">Social Protection Coverage</div>
+                <div class="kpi-value">64.3%</div>
+                <div class="kpi-subtitle">Population covered by social protection floors (2025)</div>
+                <div class="kpi-status status-3">On Track</div>
+            </div>
+
+            <!-- Card 2: Zero Hunger - Child Underweight -->
+            <div class="kpi-card">
+                <i class="fas fa-child kpi-icon" style="color: #f39c12;"></i>
+                <div class="kpi-title">Child Underweight</div>
+                <div class="kpi-value">32.1%</div>
+                <div class="kpi-subtitle">Children under 5 years (2019-21)</div>
+                <div class="kpi-status status-2">Needs Acceleration</div>
+            </div>
+
+            <!-- Card 3: Good Health - Maternal Mortality -->
+            <div class="kpi-card">
+                <i class="fas fa-heartbeat kpi-icon" style="color: #c0392b;"></i>
+                <div class="kpi-title">Maternal Mortality Ratio</div>
+                <div class="kpi-value">93</div>
+                <div class="kpi-subtitle">Per 100,000 live births (2019-21)</div>
+                <div class="kpi-status status-3">On Track</div>
+            </div>
+
+            <!-- Card 4: Quality Education - GER -->
+            <div class="kpi-card">
+                <i class="fas fa-user-graduate kpi-icon" style="color: #9b59b6;"></i>
+                <div class="kpi-title">Higher Secondary Enrolment</div>
+                <div class="kpi-value">56.2%</div>
+                <div class="kpi-subtitle">Gross Enrolment Ratio (2023-24)</div>
+                <div class="kpi-status status-3">On Track</div>
+            </div>
+        </div>
+
+        <!-- SDG Charts - Row 1 (4 Charts) -->
+        <h2 style="text-align: center; color: #0077b6; margin: 30px 0 20px;">SDG Progress Indicators</h2>
+        <div class="charts-section">
+            <!-- Chart 1: Social Protection Coverage -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Social Protection</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="sdgProgressChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: SHG Bank Credit Linkage -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Self-Help Groups</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="regionalComparisonChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3: Senior Citizens Assistance -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Senior Citizens Care</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="seniorCitizensChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 4: Child Nutrition -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Child Nutrition</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="childNutritionChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SDG Charts - Row 2 (4 Charts) -->
+        <div class="charts-section">
+            <!-- Chart 5: Agricultural Productivity -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Agriculture Productivity</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="agricultureChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 6: Maternal Mortality -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Maternal Mortality</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="maternalMortalityChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 7: Education Proficiency -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Learning Proficiency</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="educationChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 8: Higher Education Enrollment -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Higher Education GER</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="enrollmentChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- State Comparison Section -->
+        <div class="state-comparison">
+            <div class="comparison-header">
+                <h2 class="comparison-title">State-wise SDG Performance Comparison</h2>
+                <div class="state-selectors">
+                    <select class="state-select" id="state1">
+                        <option value="kerala">Kerala</option>
+                        <option value="himachal">Himachal Pradesh</option>
+                        <option value="tamilnadu">Tamil Nadu</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="bihar">Bihar</option>
+                    </select>
+                    <select class="state-select" id="state2">
+                        <option value="himachal">Himachal Pradesh</option>
+                        <option value="kerala">Kerala</option>
+                        <option value="tamilnadu">Tamil Nadu</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="bihar">Bihar</option>
+                    </select>
+                </div>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-label">SDG Index Score</div>
+                    <div class="comparison-value" id="sdgScore1">75</div>
+                    <div class="comparison-label state-name" id="stateName1">Kerala</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-label">Poverty Rate</div>
+                    <div class="comparison-value" id="povertyRate1">6.3%</div>
+                    <div class="comparison-label state-name" id="stateName2">Kerala</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-label">Health Index</div>
+                    <div class="comparison-value" id="healthIndex1">82</div>
+                    <div class="comparison-label state-name" id="stateName3">Kerala</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-label">SDG Index Score</div>
+                    <div class="comparison-value" id="sdgScore2">72</div>
+                    <div class="comparison-label state-name" id="stateName4">Himachal Pradesh</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-label">Poverty Rate</div>
+                    <div class="comparison-value" id="povertyRate2">8.5%</div>
+                    <div class="comparison-label state-name" id="stateName5">Himachal Pradesh</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-label">Health Index</div>
+                    <div class="comparison-value" id="healthIndex2">78</div>
+                    <div class="comparison-label state-name" id="stateName6">Himachal Pradesh</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Data Table Section -->
+        <div class="data-table-section">
+            <div class="table-header">
+                <h2 class="table-title">State-wise SDG Performance (2023)</h2>
+                <div class="table-controls">
+                    <input type="text" class="search-box" placeholder="Search states..." id="stateSearch">
+                    <button class="view-all-btn" id="exportData">Export Data</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="stateTable">
+                    <thead>
+                        <tr>
+                            <th>State</th>
+                            <th>SDG Index</th>
+                            <th>No Poverty</th>
+                            <th>Zero Hunger</th>
+                            <th>Good Health</th>
+                            <th>Quality Education</th>
+                            <th>Gender Equality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Kerala</td><td>75</td><td>85</td><td>78</td><td>82</td><td>80</td><td>72</td></tr>
+                        <tr><td>Himachal Pradesh</td><td>72</td><td>80</td><td>75</td><td>78</td><td>76</td><td>70</td></tr>
+                        <tr><td>Tamil Nadu</td><td>68</td><td>75</td><td>70</td><td>74</td><td>72</td><td>68</td></tr>
+                        <tr><td>Andhra Pradesh</td><td>67</td><td>73</td><td>69</td><td>72</td><td>70</td><td>66</td></tr>
+                        <tr><td>Telangana</td><td>67</td><td>74</td><td>68</td><td>71</td><td>71</td><td>67</td></tr>
+                        <tr><td>Gujarat</td><td>65</td><td>72</td><td>68</td><td>70</td><td>69</td><td>65</td></tr>
+                        <tr><td>Punjab</td><td>65</td><td>71</td><td>67</td><td>69</td><td>68</td><td>64</td></tr>
+                        <tr><td>Haryana</td><td>64</td><td>70</td><td>66</td><td>68</td><td>67</td><td>63</td></tr>
+                        <tr><td>Maharashtra</td><td>64</td><td>69</td><td>65</td><td>67</td><td>66</td><td>62</td></tr>
+                        <tr><td>Karnataka</td><td>63</td><td>68</td><td>64</td><td>66</td><td>65</td><td>61</td></tr>
+                        <tr><td>Uttarakhand</td><td>62</td><td>67</td><td>63</td><td>65</td><td>64</td><td>60</td></tr>
+                        <tr><td>Sikkim</td><td>62</td><td>66</td><td>62</td><td>64</td><td>63</td><td>59</td></tr>
+                        <tr><td>Goa</td><td>61</td><td>65</td><td>61</td><td>63</td><td>62</td><td>58</td></tr>
+                        <tr><td>Mizoram</td><td>60</td><td>64</td><td>60</td><td>62</td><td>61</td><td>57</td></tr>
+                        <tr><td>Tripura</td><td>59</td><td>63</td><td>59</td><td>61</td><td>60</td><td>56</td></tr>
+                        <tr><td>West Bengal</td><td>58</td><td>62</td><td>58</td><td>60</td><td>59</td><td>55</td></tr>
+                        <tr><td>Rajasthan</td><td>57</td><td>61</td><td>57</td><td>59</td><td>58</td><td>54</td></tr>
+                        <tr><td>Meghalaya</td><td>56</td><td>60</td><td>56</td><td>58</td><td>57</td><td>53</td></tr>
+                        <tr><td>Odisha</td><td>55</td><td>59</td><td>55</td><td>57</td><td>56</td><td>52</td></tr>
+                        <tr><td>Manipur</td><td>55</td><td>58</td><td>54</td><td>56</td><td>55</td><td>51</td></tr>
+                        <tr><td>Jammu and Kashmir</td><td>54</td><td>57</td><td>53</td><td>55</td><td>54</td><td>50</td></tr>
+                        <tr><td>Chhattisgarh</td><td>54</td><td>56</td><td>52</td><td>54</td><td>53</td><td>49</td></tr>
+                        <tr><td>Madhya Pradesh</td><td>53</td><td>55</td><td>51</td><td>53</td><td>52</td><td>48</td></tr>
+                        <tr><td>Assam</td><td>53</td><td>54</td><td>50</td><td>52</td><td>51</td><td>47</td></tr>
+                        <tr><td>Nagaland</td><td>52</td><td>53</td><td>49</td><td>51</td><td>50</td><td>46</td></tr>
+                        <tr><td>Arunachal Pradesh</td><td>52</td><td>52</td><td>48</td><td>50</td><td>49</td><td>45</td></tr>
+                        <tr><td>Jharkhand</td><td>51</td><td>51</td><td>47</td><td>49</td><td>48</td><td>44</td></tr>
+                        <tr><td>Bihar</td><td>50</td><td>45</td><td>46</td><td>48</td><td>47</td><td>43</td></tr>
+                        <tr><td>Uttar Pradesh</td><td>50</td><td>50</td><td>45</td><td>47</td><td>46</td><td>42</td></tr>
+                        <!-- Union Territories -->
+                        <tr><td>Delhi</td><td>68</td><td>73</td><td>69</td><td>72</td><td>71</td><td>67</td></tr>
+                        <tr><td>Chandigarh</td><td>67</td><td>72</td><td>68</td><td>71</td><td>70</td><td>66</td></tr>
+                        <tr><td>Puducherry</td><td>66</td><td>71</td><td>67</td><td>70</td><td>69</td><td>65</td></tr>
+                        <tr><td>Andaman and Nicobar</td><td>64</td><td>69</td><td>65</td><td>68</td><td>67</td><td>63</td></tr>
+                        <tr><td>Lakshadweep</td><td>63</td><td>68</td><td>64</td><td>67</td><td>66</td><td>62</td></tr>
+                        <tr><td>Dadra & Nagar Haveli and Daman & Diu</td><td>62</td><td>67</td><td>63</td><td>66</td><td>65</td><td>61</td></tr>
+                        <tr><td>Ladakh</td><td>60</td><td>65</td><td>61</td><td>64</td><td>63</td><td>59</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for All Updates -->
+    <div id="updatesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">All SDG India 2030 Updates & Alerts</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="updates-list">
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-shield-alt"></i>
+                        <span><strong>SDG 1 - No Poverty:</strong> Social protection coverage reaches 64.3% in 2025, marking significant progress towards universal coverage</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-users"></i>
+                        <span><strong>SDG 1 - No Poverty:</strong> 53.2 Lakh Self-Help Groups provided bank credit linkage in 2023-24</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-apple-alt"></i>
+                        <span><strong>SDG 2 - Zero Hunger:</strong> Zero Hunger initiative benefits 80 crore citizens through food security programs</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-heartbeat"></i>
+                        <span><strong>SDG 3 - Good Health:</strong> Maternal mortality ratio declines to 93 per 100,000 live births</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-child"></i>
+                        <span><strong>SDG 3 - Good Health:</strong> Under-5 mortality rate improves significantly across rural and urban areas</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span><strong>SDG 4 - Quality Education:</strong> Gross enrolment in higher secondary education reaches 56.2%</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-school"></i>
+                        <span><strong>SDG 4 - Quality Education:</strong> Digital learning initiatives reach 15 crore students nationwide</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-female"></i>
+                        <span><strong>SDG 5 - Gender Equality:</strong> Women's participation in workforce shows steady growth</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-tint"></i>
+                        <span><strong>SDG 6 - Clean Water:</strong> Jal Jeevan Mission provides tap water to 14.5 crore rural households</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-solar-panel"></i>
+                        <span><strong>SDG 7 - Affordable Energy:</strong> Renewable energy capacity reaches 175 GW milestone</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-seedling"></i>
+                        <span><strong>SDG 2 - Zero Hunger:</strong> Agricultural productivity per worker increases to Rs 94,110 in 2024-25</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-home"></i>
+                        <span><strong>SDG 1 - No Poverty:</strong> 1.57 Lakh senior citizens assisted through institutional care in 2023-24</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-leaf"></i>
+                        <span><strong>SDG 13 - Climate Action:</strong> India commits to net-zero carbon emissions by 2070</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon-text">
+                        <i class="fas fa-recycle"></i>
+                        <span><strong>SDG 12 - Responsible Consumption:</strong> Swachh Bharat Mission achieves 100% ODF status</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Footer Section -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About the Dashboard</h3>
+                <ul class="footer-links">
+                    <li><a href="#">SDG Overview</a></li>
+                    <li><a href="#">Methodology</a></li>
+                    <li><a href="#">Data Sources</a></li>
+                    <li><a href="#">Release Notes</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">SDG Documentation</a></li>
+                    <li><a href="#">API Access</a></li>
+                    <li><a href="#">Data Downloads</a></li>
+                    <li><a href="#">SDG Glossary</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">Media Inquiries</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 NITI Aayog, Government of India. All rights reserved. | SDG India 2030
+        </div>
+    </div>
+
+    <script>
+        // Simple script to handle dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const arrow = this.querySelector('.dropdown-arrow');
+                    if (arrow) arrow.style.transform = 'rotate(180deg)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    const arrow = this.querySelector('.dropdown-arrow');
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                });
+            });
+
+            // View All button and Modal functionality
+            const modal = document.getElementById('updatesModal');
+            const viewAllBtn = document.querySelector('.view-all-btn');
+            const closeBtn = document.querySelector('.close-btn');
+
+            viewAllBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+            });
+
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // State comparison functionality
+            const stateData = {
+                kerala: { sdgScore: 75, povertyRate: '6.3%', healthIndex: 82, name: 'Kerala' },
+                himachal: { sdgScore: 72, povertyRate: '8.5%', healthIndex: 78, name: 'Himachal Pradesh' },
+                tamilnadu: { sdgScore: 68, povertyRate: '11.2%', healthIndex: 74, name: 'Tamil Nadu' },
+                gujarat: { sdgScore: 65, povertyRate: '13.5%', healthIndex: 70, name: 'Gujarat' },
+                bihar: { sdgScore: 52, povertyRate: '33.7%', healthIndex: 55, name: 'Bihar' }
+            };
+
+            function updateStateComparison() {
+                const state1 = document.getElementById('state1').value;
+                const state2 = document.getElementById('state2').value;
+                
+                // Update values for state 1
+                document.getElementById('sdgScore1').textContent = stateData[state1].sdgScore;
+                document.getElementById('povertyRate1').textContent = stateData[state1].povertyRate;
+                document.getElementById('healthIndex1').textContent = stateData[state1].healthIndex;
+                
+                // Update values for state 2
+                document.getElementById('sdgScore2').textContent = stateData[state2].sdgScore;
+                document.getElementById('povertyRate2').textContent = stateData[state2].povertyRate;
+                document.getElementById('healthIndex2').textContent = stateData[state2].healthIndex;
+                
+                // Update all state name labels
+                document.querySelectorAll('#stateName1, #stateName2, #stateName3').forEach(el => {
+                    el.textContent = stateData[state1].name;
+                });
+                
+                document.querySelectorAll('#stateName4, #stateName5, #stateName6').forEach(el => {
+                    el.textContent = stateData[state2].name;
+                });
+            }
+
+            document.getElementById('state1').addEventListener('change', updateStateComparison);
+            document.getElementById('state2').addEventListener('change', updateStateComparison);
+
+            // Table search functionality
+            document.getElementById('stateSearch').addEventListener('input', function() {
+                const filter = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#stateTable tbody tr');
+                
+                rows.forEach(row => {
+                    const stateName = row.cells[0].textContent.toLowerCase();
+                    if (stateName.includes(filter)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+
+            // Export data functionality
+            document.getElementById('exportData').addEventListener('click', function() {
+                alert('Data export functionality would be implemented here');
+                // In a real implementation, this would generate a CSV or Excel file
+            });
+
+            // Chart.js implementation
+            // Social Protection Coverage Trend Chart
+            const sdgProgressCtx = document.getElementById('sdgProgressChart').getContext('2d');
+            const sdgProgressChart = new Chart(sdgProgressCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2016', '2019', '2022', '2025'],
+                    datasets: [{
+                        label: 'Social Protection Coverage (%)',
+                        data: [22, 24.4, 48.8, 64.3],
+                        backgroundColor: '#e74c3c',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 1.3.1: Social Protection Coverage (2016-2025)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 80,
+                            title: {
+                                display: true,
+                                text: 'Percent of Population'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // SHG Bank Credit Linkage Chart
+            const regionalComparisonCtx = document.getElementById('regionalComparisonChart').getContext('2d');
+            const regionalComparisonChart = new Chart(regionalComparisonCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24'],
+                    datasets: [{
+                        label: 'SHGs Bank Credit (Lakhs)',
+                        data: [16.29, 17.16, 20.75, 23.65, 28.84, 25.9, 31.5, 41.42, 53.2],
+                        backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                        borderColor: '#e74c3c',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 1.3.2: Self-Help Groups Bank Credit Linkage',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of SHGs (Lakhs)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Financial Year'
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart type switching
+            document.querySelectorAll('.chart-action-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const chartName = this.getAttribute('data-chart');
+                    const chartType = this.getAttribute('data-type');
+
+                    if (chartName === 'sdgProgress') {
+                        sdgProgressChart.config.type = chartType;
+                        sdgProgressChart.update();
+                    } else if (chartName === 'regionalComparison') {
+                        regionalComparisonChart.config.type = chartType;
+                        regionalComparisonChart.update();
+                    }
+                });
+            });
+
+            // Additional Charts Implementation
+
+            // Chart 3: Senior Citizens Assistance
+            const seniorCitizensCtx = document.getElementById('seniorCitizensChart').getContext('2d');
+            new Chart(seniorCitizensCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2014-15', '2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24'],
+                    datasets: [{
+                        label: 'Number of Senior Citizens',
+                        data: [18225, 23095, 40200, 40450, 34920, 109038, 136440, 139385, 86765, 157820],
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: '#3498db',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 1.3.3: Senior Citizens Provided Institutional Assistance',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Number of Senior Citizens' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 4: Child Nutrition - Doughnut Chart
+            const childNutritionCtx = document.getElementById('childNutritionChart').getContext('2d');
+            new Chart(childNutritionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Underweight 2019-21', 'Anaemic 2019-21', 'Healthy Children'],
+                    datasets: [{
+                        data: [32.1, 67.1, 100 - 67.1],
+                        backgroundColor: ['#f39c12', '#e74c3c', '#4caf50'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Child Nutrition Status',
+                            font: { size: 12, weight: 'bold' }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 5: Agricultural Productivity
+            const agricultureCtx = document.getElementById('agricultureChart').getContext('2d');
+            new Chart(agricultureCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25'],
+                    datasets: [{
+                        label: 'Gross Value Added (Rs. per worker)',
+                        data: [61427, 65603, 69936, 71402, 75801, 78837, 82482, 87646, 89977, 94110],
+                        backgroundColor: 'rgba(39, 174, 96, 0.2)',
+                        borderColor: '#27ae60',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 2.3.2: Gross Value Added in Agriculture per Worker',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Rupees per Worker' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 6: Maternal Mortality Ratio
+            const maternalMortalityCtx = document.getElementById('maternalMortalityChart').getContext('2d');
+            new Chart(maternalMortalityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2014-16', '2015-17', '2016-18', '2017-19', '2018-20', '2019-21'],
+                    datasets: [{
+                        label: 'MMR (per 100,000 live births)',
+                        data: [130, 122, 113, 103, 97, 93],
+                        backgroundColor: '#4caf50',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 3.1.1: Maternal Mortality Ratio Trend',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Per 100,000 Live Births' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 7: Student Learning Proficiency - Radar Chart
+            const educationCtx = document.getElementById('educationChart').getContext('2d');
+            new Chart(educationCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Class-3 Lang', 'Class-3 Math', 'Class-5 Lang', 'Class-5 Math', 'Class-8 Lang', 'Class-8 Math'],
+                    datasets: [
+                        {
+                            label: '2017',
+                            data: [39, 43, 42, 25, 34, 27],
+                            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                            borderColor: '#e74c3c',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#e74c3c'
+                        },
+                        {
+                            label: '2021',
+                            data: [48.3, 53.9, 46.3, 44.7, 37.3, 39.6],
+                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                            borderColor: '#3498db',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#3498db'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Learning Proficiency',
+                            font: { size: 12, weight: 'bold' }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 }
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 60,
+                            ticks: {
+                                font: { size: 9 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 8: Gross Enrollment Ratio - Higher Secondary
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            new Chart(enrollmentCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24'],
+                    datasets: [{
+                        label: 'GER Higher Secondary (%)',
+                        data: [48.32, 43.27, 48.13, 50.14, 51.42, 53.8, 57.6, 56.8, 56.2],
+                        backgroundColor: 'rgba(155, 89, 182, 0.2)',
+                        borderColor: '#9b59b6',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SDG 4.1.3: Gross Enrollment Ratio in Higher Secondary Education',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 65,
+                            title: { display: true, text: 'Percentage' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
