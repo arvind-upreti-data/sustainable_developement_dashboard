@@ -13,30 +13,91 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-container > * {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .kpi-card {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .chart-container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef3 50%, #f0f4f8 100%);
+            background-attachment: fixed;
         }
 
         .header-container {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
-            padding: 20px 40px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 30%, #3b82f6 70%, #60a5fa 100%);
+            padding: 25px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-container::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
         .logo-section {
             display: flex;
             align-items: center;
             gap: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .logo {
-            height: 70px;
+            height: 80px;
             width: auto;
             object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .main-title {
@@ -45,9 +106,21 @@
             font-weight: 800;
             text-align: center;
             flex-grow: 1;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 20px rgba(96, 165, 250, 0.3);
             font-family: 'Arial Black', sans-serif;
+            position: relative;
+            z-index: 1;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 20px rgba(96, 165, 250, 0.3);
+            }
+            50% {
+                text-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 30px rgba(96, 165, 250, 0.5);
+            }
         }
 
         .niti-logo {
@@ -66,10 +139,12 @@
         }
 
         .navbar {
-            background: linear-gradient(135deg, #0098db 0%, #0077b6 100%);
+            background: linear-gradient(135deg, #0098db 0%, #0284c7 50%, #0077b6 100%);
             padding: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             position: relative;
+            z-index: 100;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-menu {
@@ -100,7 +175,8 @@
         }
 
         .nav-link:hover {
-            background-color: rgba(255,255,255,0.15);
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            transform: translateY(-2px);
         }
 
         .nav-item:first-child .nav-link {
@@ -230,6 +306,7 @@
             color: #666;
         }
 
+
         /* Dashboard Content */
         .dashboard-container {
             max-width: 1400px;
@@ -239,19 +316,46 @@
 
         .dashboard-title {
             color: #0077b6;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 25px;
             text-align: center;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dashboard-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #0098db, transparent);
+            border-radius: 2px;
         }
 
         /* What's New Marquee Section */
         .whats-new-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 15px 20px;
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 20px 25px;
+            margin-bottom: 35px;
             overflow: hidden;
+            border: 1px solid rgba(0, 152, 219, 0.15);
+            position: relative;
+        }
+
+        .whats-new-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #0098db 0%, #60a5fa 100%);
         }
 
         .whats-new-header {
@@ -278,18 +382,26 @@
         }
 
         .view-all-btn {
-            background: #0098db;
+            background: linear-gradient(135deg, #0098db 0%, #0284c7 100%);
             color: white;
             border: none;
-            padding: 6px 15px;
-            border-radius: 4px;
+            padding: 8px 18px;
+            border-radius: 6px;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 8px rgba(0, 152, 219, 0.3);
+            font-weight: 600;
         }
 
         .view-all-btn:hover {
-            background: #0077b6;
+            background: linear-gradient(135deg, #0077b6 0%, #0369a1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 119, 182, 0.4);
+        }
+
+        .view-all-btn:active {
+            transform: translateY(0);
         }
 
         .marquee-container {
@@ -441,16 +553,37 @@
         }
 
         .kpi-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 30px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 152, 219, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0098db 0%, #60a5fa 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .kpi-card:hover::before {
+            transform: scaleX(1);
         }
 
         .kpi-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 152, 219, 0.15);
+            border-color: rgba(0, 152, 219, 0.3);
         }
 
         .kpi-icon {
@@ -511,19 +644,39 @@
         }
 
         .chart-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            padding: 20px;
-            height: 380px;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 24px;
+            height: 400px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 152, 219, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0098db 0%, #3b82f6 50%, #60a5fa 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .chart-container:hover::before {
+            opacity: 1;
         }
 
         .chart-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 16px 32px rgba(0, 152, 219, 0.12);
+            border-color: rgba(0, 152, 219, 0.2);
         }
 
         /* SDG Detailed Charts Grid */
@@ -568,19 +721,87 @@
         }
 
         .chart-action-btn {
-            background: #f0f8ff;
-            border: 1px solid #0098db;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 100%);
+            border: 1.5px solid #0098db;
             color: #0098db;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(0, 152, 219, 0.1);
         }
 
         .chart-action-btn:hover {
-            background: #0098db;
+            background: linear-gradient(135deg, #0098db 0%, #0284c7 100%);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 152, 219, 0.3);
+        }
+
+        .chart-action-btn:active {
+            transform: translateY(0);
+        }
+
+        .chart-action-btn i {
+            font-size: 0.85rem;
+        }
+
+        /* Modal for chart zoom */
+        .chart-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            overflow: auto;
+        }
+
+        .chart-modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .chart-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0098db;
+        }
+
+        .chart-modal-canvas {
+            width: 100% !important;
+            height: calc(85vh - 100px) !important;
+        }
+
+        /* Summary Modal */
+        .summary-box {
+            background: #f8f9fa;
+            border-left: 4px solid #0098db;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .summary-box strong {
+            color: #0077b6;
         }
 
         .chart-canvas-container {
@@ -596,12 +817,13 @@
 
         /* NEW: Data Table Section */
         .data-table-section {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 25px;
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 35px;
             overflow: auto;
+            border: 1px solid rgba(0, 152, 219, 0.1);
         }
 
         .table-header {
@@ -640,29 +862,39 @@
         }
 
         .data-table th {
-            background: #f0f8ff;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 100%);
             color: #0077b6;
             text-align: left;
-            padding: 12px 15px;
-            border-bottom: 2px solid #0098db;
+            padding: 14px 16px;
+            border-bottom: 3px solid #0098db;
+            font-weight: 700;
+            font-size: 0.95rem;
         }
 
         .data-table td {
-            padding: 10px 15px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.2s ease;
+        }
+
+        .data-table tbody tr {
+            transition: all 0.3s ease;
         }
 
         .data-table tr:hover {
-            background: #f5f9ff;
+            background: linear-gradient(90deg, #f0f9ff 0%, #f5f9ff 100%);
+            transform: scale(1.005);
+            box-shadow: 0 2px 8px rgba(0, 152, 219, 0.08);
         }
 
         /* NEW: State Comparison Section */
         .state-comparison {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 25px;
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(0, 152, 219, 0.1);
         }
 
         .comparison-header {
@@ -697,10 +929,18 @@
         }
 
         .comparison-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f1f5f9 100%);
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
+            border: 1px solid rgba(0, 152, 219, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 152, 219, 0.12);
+            border-color: rgba(0, 152, 219, 0.3);
         }
 
         .comparison-value {
@@ -717,10 +957,22 @@
 
         /* NEW: Footer */
         .footer {
-            background: #333;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
             color: white;
-            padding: 30px 0;
-            margin-top: 50px;
+            padding: 40px 0;
+            margin-top: 60px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0098db 0%, #3b82f6 50%, #0098db 100%);
         }
 
         .footer-content {
@@ -753,7 +1005,8 @@
         }
 
         .footer-links a:hover {
-            color: #0098db;
+            color: #60a5fa;
+            padding-left: 5px;
         }
 
         .copyright {
@@ -885,7 +1138,9 @@
     <div class="header-container">
         <div class="logo-section">
             <div class="niti-logo">
-                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Replace 'Screenshot_2025.png' with the actual path to your Screenshot_2025 image -->
+                <img src="Screenshot_2025.png" alt="Logo" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:none;">
                     <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#fbbf24" stroke-width="3"/>
                     <path d="M30 40 L50 25 L70 40 L70 75 L30 75 Z" fill="#3b82f6" opacity="0.3"/>
                     <circle cx="50" cy="50" r="20" fill="#1e40af"/>
@@ -911,6 +1166,7 @@
         </div>
     </div>
 
+    <!-- Navigation Bar -->
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="nav-menu">
@@ -1417,6 +1673,11 @@
             <div class="chart-container">
                 <div class="chart-header">
                     <h3 class="chart-title" style="font-size: 0.95rem;">Social Protection</h3>
+                    <div class="chart-actions">
+                        <button class="chart-action-btn" onclick="zoomChart('sdgProgressChart', 'Social Protection Coverage')"><i class="fas fa-search-plus"></i></button>
+                        <button class="chart-action-btn" onclick="showChartSummary('sdgProgressChart')"><i class="fas fa-info-circle"></i></button>
+                        <button class="chart-action-btn" onclick="changeChartType('sdgProgressChart')"><i class="fas fa-chart-bar"></i></button>
+                    </div>
                 </div>
                 <div class="chart-canvas-container">
                     <canvas id="sdgProgressChart" class="chart-canvas"></canvas>
@@ -1493,6 +1754,92 @@
                 </div>
                 <div class="chart-canvas-container">
                     <canvas id="enrollmentChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SDG Additional Charts - Row 3 (4 Charts) -->
+        <div class="charts-section">
+            <!-- Chart 9: Improved Drinking Water Source (Rural) -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Rural Water Access</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="ruralWaterChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 10: Renewable Energy Share -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Renewable Energy</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="renewableEnergyChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 11: Gini Coefficient -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Income Inequality</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="giniChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 12: Disaster Affected Population -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Disaster Impact</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="disasterChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SDG Additional Charts - Row 4 (4 Charts) -->
+        <div class="charts-section">
+            <!-- Chart 13: Crime Against Children -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Child Safety</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="childCrimeChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 14: Safe Drinking Water PWS -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Piped Water Supply</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="pwsChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 15: Household Expenditure Growth -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Expenditure Growth</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="expenditureChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 16: Environmental Compliance -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title" style="font-size: 0.95rem;">Environmental Standards</h3>
+                </div>
+                <div class="chart-canvas-container">
+                    <canvas id="environmentChart" class="chart-canvas"></canvas>
                 </div>
             </div>
         </div>
@@ -2199,7 +2546,409 @@
                     }
                 }
             });
+
+            // Add action buttons to all remaining chart headers dynamically
+            const chartConfigs = [
+                {id: 'regionalComparisonChart', title: 'Self-Help Groups Bank Credit'},
+                {id: 'seniorCitizensChart', title: 'Senior Citizens Institutional Assistance'},
+                {id: 'childNutritionChart', title: 'Child Nutrition Status'},
+                {id: 'agricultureChart', title: 'Agricultural Productivity'},
+                {id: 'maternalMortalityChart', title: 'Maternal Mortality Ratio'},
+                {id: 'educationChart', title: 'Learning Proficiency'},
+                {id: 'enrollmentChart', title: 'Higher Education Enrollment'},
+                {id: 'ruralWaterChart', title: 'Rural Improved Drinking Water'},
+                {id: 'renewableEnergyChart', title: 'Renewable Energy Share'},
+                {id: 'giniChart', title: 'Income Inequality (Gini Coefficient)'},
+                {id: 'disasterChart', title: 'Disaster Affected Population'},
+                {id: 'childCrimeChart', title: 'Crime Against Children'},
+                {id: 'pwsChart', title: 'Piped Water Supply'},
+                {id: 'expenditureChart', title: 'Household Expenditure Growth'},
+                {id: 'environmentChart', title: 'Environmental Compliance'}
+            ];
+
+            // Add buttons to all chart containers
+            document.querySelectorAll('.chart-container').forEach((container, index) => {
+                const header = container.querySelector('.chart-header');
+                const canvas = container.querySelector('canvas');
+                if (header && canvas && !header.querySelector('.chart-actions')) {
+                    const chartId = canvas.id;
+                    const chartTitle = header.querySelector('.chart-title')?.textContent || 'Chart';
+
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'chart-actions';
+                    actionsDiv.innerHTML = `
+                        <button class="chart-action-btn" onclick="zoomChart('${chartId}', '${chartTitle}')"><i class="fas fa-search-plus"></i></button>
+                        <button class="chart-action-btn" onclick="showChartSummary('${chartId}')"><i class="fas fa-info-circle"></i></button>
+                        <button class="chart-action-btn" onclick="changeChartType('${chartId}')"><i class="fas fa-chart-bar"></i></button>
+                    `;
+                    header.appendChild(actionsDiv);
+                }
+            });
+
+            // Initialize new charts for rows 3 and 4
+            // Chart 9: Rural Water Access
+            const ruralWaterCtx = document.getElementById('ruralWaterChart')?.getContext('2d');
+            if (ruralWaterCtx) {
+                new Chart(ruralWaterCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25'],
+                        datasets: [{
+                            label: 'Rural Population (%)',
+                            data: [94.57, 94.35, 95.23, 95.98, 96.98, 98.56, 98.64, 99.25, 99.29, 99.62],
+                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                            borderColor: '#3498db',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 6.1.2: Improved Drinking Water (Rural)', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, title: { display: true, text: 'Percentage' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 10: Renewable Energy
+            const renewableEnergyCtx = document.getElementById('renewableEnergyChart')?.getContext('2d');
+            if (renewableEnergyCtx) {
+                new Chart(renewableEnergyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25'],
+                        datasets: [{
+                            label: 'Renewable Energy Share (%)',
+                            data: [16.02, 16.5, 17.49, 19.08, 21.26, 21.67, 21.73, 22.61, 20.75, 22.13],
+                            backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                            borderColor: '#2ecc71',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 7.2.1: Renewable Energy Share', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 25, title: { display: true, text: 'Percentage' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 11: Gini Coefficient
+            const giniCtx = document.getElementById('giniChart')?.getContext('2d');
+            if (giniCtx) {
+                new Chart(giniCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Rural 2011-12', 'Rural 2022-23', 'Rural 2023-24', 'Urban 2022-23', 'Urban 2023-24'],
+                        datasets: [{
+                            label: 'Gini Coefficient',
+                            data: [0.283, 0.266, 0.237, 0.314, 0.284],
+                            backgroundColor: ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 10.1.2: Gini Coefficient', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 0.4, title: { display: true, text: 'Ratio' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 12: Disaster Impact
+            const disasterCtx = document.getElementById('disasterChart')?.getContext('2d');
+            if (disasterCtx) {
+                new Chart(disasterCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2015', '2016', '2017', '2018', '2023', '2024 (Monsoon)'],
+                        datasets: [{
+                            label: 'Deaths & Affected (per 100k)',
+                            data: [15000, 13706.39, 13381.24, 10738.97, 277.09, 66.66],
+                            backgroundColor: '#e74c3c'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 13.1.1: Disaster Affected Population', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Per 100,000 Population' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 13: Child Crime
+            const childCrimeCtx = document.getElementById('childCrimeChart')?.getContext('2d');
+            if (childCrimeCtx) {
+                new Chart(childCrimeCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
+                        datasets: [{
+                            label: 'Crime Rate (per 100k children)',
+                            data: [22.05, 24.99, 31.13, 33.74, 35.15, 30.37, 35.51, 38.33],
+                            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                            borderColor: '#e74c3c',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 16.2.1: Crime Against Children', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Per 100,000 Children' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 14: PWS Chart
+            const pwsCtx = document.getElementById('pwsChart')?.getContext('2d');
+            if (pwsCtx) {
+                new Chart(pwsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Rural 2019-20', 'Rural 2020-21', 'Rural 2024-25', 'Urban 2019-20', 'Urban 2020-21'],
+                        datasets: [{
+                            label: 'Piped Water Supply (%)',
+                            data: [21.33, 35.15, 80.2, 70.36, 75.05],
+                            backgroundColor: ['#3498db', '#2980b9', '#1abc9c', '#f39c12', '#e67e22']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 6.1.1: Piped Water Supply', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, title: { display: true, text: 'Percentage' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 15: Expenditure Growth
+            const expenditureCtx = document.getElementById('expenditureChart')?.getContext('2d');
+            if (expenditureCtx) {
+                new Chart(expenditureCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Bottom 40% Rural', 'Bottom 10% Urban', 'Total Rural', 'Total Urban'],
+                        datasets: [{
+                            label: 'Growth Rate (%)',
+                            data: [13.61, 13.35, 15.59, 11.27],
+                            backgroundColor: ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 10.1.1: Household Expenditure Growth (2011-12)', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Percentage' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 16: Environmental Compliance
+            const environmentCtx = document.getElementById('environmentChart')?.getContext('2d');
+            if (environmentCtx) {
+                new Chart(environmentCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                        datasets: [{
+                            label: 'Industries Complying (%)',
+                            data: [86.25, 91.71, 91.79, 91.27, 88.99, 90.33],
+                            backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                            borderColor: '#2ecc71',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'SDG 13.2.3: Environmental Standards Compliance', font: { size: 14, weight: 'bold' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, title: { display: true, text: 'Percentage' } }
+                        }
+                    }
+                });
+            }
+
+            // Table - Show only 10 rows initially with expand button
+            const tableBody = document.querySelector('#stateTable tbody');
+            const allRows = Array.from(tableBody.querySelectorAll('tr'));
+            let isExpanded = false;
+
+            function toggleTableRows() {
+                if (isExpanded) {
+                    allRows.forEach((row, index) => {
+                        if (index >= 10) row.style.display = 'none';
+                    });
+                    expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show All Data';
+                    isExpanded = false;
+                } else {
+                    allRows.forEach(row => row.style.display = '');
+                    expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less';
+                    isExpanded = true;
+                }
+            }
+
+            // Initially hide rows after 10th
+            allRows.forEach((row, index) => {
+                if (index >= 10) row.style.display = 'none';
+            });
+
+            // Add expand button
+            const expandBtn = document.createElement('button');
+            expandBtn.className = 'view-all-btn';
+            expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show All Data';
+            expandBtn.style.marginTop = '15px';
+            expandBtn.onclick = toggleTableRows;
+            document.querySelector('.table-container').appendChild(expandBtn);
         });
+
+        // Global chart functions
+        let currentCharts = {};
+        let chartModal = null;
+
+        // Store chart instances
+        window.addEventListener('load', function() {
+            Chart.instances.forEach((chart) => {
+                currentCharts[chart.canvas.id] = chart;
+            });
+        });
+
+        // Zoom Chart Function
+        function zoomChart(chartId, chartTitle) {
+            const originalCanvas = document.getElementById(chartId);
+            if (!originalCanvas) return;
+
+            const chart = Chart.getChart(chartId);
+            if (!chart) return;
+
+            // Create modal if not exists
+            if (!chartModal) {
+                chartModal = document.createElement('div');
+                chartModal.className = 'chart-modal';
+                chartModal.innerHTML = `
+                    <div class="chart-modal-content">
+                        <div class="chart-modal-header">
+                            <h2 class="modal-title" style="color: #0077b6;"></h2>
+                            <span class="close-btn" onclick="closeChartModal()">&times;</span>
+                        </div>
+                        <canvas id="modalChart" class="chart-modal-canvas"></canvas>
+                    </div>
+                `;
+                document.body.appendChild(chartModal);
+            }
+
+            // Set title
+            chartModal.querySelector('.modal-title').textContent = chartTitle;
+
+            // Clone chart configuration
+            const modalCanvas = document.getElementById('modalChart');
+            const modalCtx = modalCanvas.getContext('2d');
+
+            // Destroy existing modal chart
+            const existingModalChart = Chart.getChart('modalChart');
+            if (existingModalChart) existingModalChart.destroy();
+
+            // Create new chart with same config
+            new Chart(modalCtx, {
+                type: chart.config.type,
+                data: chart.config.data,
+                options: chart.config.options
+            });
+
+            chartModal.style.display = 'block';
+        }
+
+        function closeChartModal() {
+            if (chartModal) chartModal.style.display = 'none';
+        }
+
+        // Show Chart Summary
+        function showChartSummary(chartId) {
+            const summaries = {
+                'sdgProgressChart': 'Social protection coverage has increased from 22% in 2016 to 64.3% in 2025, showing significant progress towards universal coverage and poverty reduction.',
+                'regionalComparisonChart': 'Self-Help Groups bank credit linkage has grown from 16.29 lakhs in 2015-16 to 53.2 lakhs in 2023-24, indicating strong financial inclusion and women empowerment.',
+                'seniorCitizensChart': 'Senior citizens receiving institutional assistance peaked at 157,820 in 2023-24, reflecting improved social protection for the elderly population.',
+                'childNutritionChart': 'Child nutrition remains a concern with 32.1% children underweight and 67.1% anaemic (2019-21), requiring accelerated intervention programs.',
+                'agricultureChart': 'Agricultural productivity per worker has steadily increased from Rs 61,427 in 2015-16 to Rs 94,110 in 2024-25, supporting rural livelihoods.',
+                'maternalMortalityChart': 'Maternal mortality ratio has declined from 130 (2014-16) to 93 (2019-21) per 100,000 live births, showing improvements in maternal healthcare.',
+                'educationChart': 'Learning proficiency has improved across all grades from 2017 to 2021, with Class-3 Math showing the highest gains from 43% to 53.9%.',
+                'enrollmentChart': 'Gross enrollment ratio in higher secondary education has grown from 48.32% (2015-16) to 56.2% (2023-24), expanding access to education.',
+                'ruralWaterChart': 'Rural population with improved drinking water access has reached 99.62% in 2024-25, nearly achieving universal coverage.',
+                'renewableEnergyChart': 'Renewable energy share has grown from 16.02% (2015-16) to 22.13% (2024-25), supporting clean energy transition goals.',
+                'giniChart': 'Income inequality (Gini coefficient) has improved in rural areas from 0.283 (2011-12) to 0.237 (2023-24), indicating more equitable income distribution.',
+                'disasterChart': 'Disaster-affected population has significantly decreased from 15,000 per 100k in 2015 to 66.66 in 2024 monsoon period, showing improved disaster management.',
+                'childCrimeChart': 'Crime against children has increased from 22.05 per 100k in 2015 to 38.33 in 2022, requiring urgent child protection measures.',
+                'pwsChart': 'Piped water supply in rural areas has dramatically increased from 21.33% (2019-20) to 80.2% (2024-25) through Jal Jeevan Mission.',
+                'expenditureChart': 'Household expenditure growth (2011-12) was highest for total rural areas at 15.59%, with bottom 40% showing inclusive growth at 13.61%.',
+                'environmentChart': 'Industrial compliance with environmental standards remains high at 90.33% in 2023, with consistent performance above 86% since 2018.'
+            };
+
+            const summary = summaries[chartId] || 'This chart shows important SDG indicators for India\'s sustainable development progress.';
+
+            alert('Chart Summary:\n\n' + summary);
+        }
+
+        // Change Chart Type
+        function changeChartType(chartId) {
+            const chart = Chart.getChart(chartId);
+            if (!chart) return;
+
+            const currentType = chart.config.type;
+            const types = ['bar', 'line', 'doughnut'];
+            const currentIndex = types.indexOf(currentType);
+            const nextType = types[(currentIndex + 1) % types.length];
+
+            chart.config.type = nextType;
+            chart.update();
+        }
+
+        // Close modal on click outside
+        window.onclick = function(event) {
+            if (chartModal && event.target === chartModal) {
+                closeChartModal();
+            }
+        };
     </script>
 </body>
 </html>
